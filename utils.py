@@ -1,4 +1,6 @@
 import pandas as pd
+import streamlit as st
+import time
 
 def format_number(value, prefix=''):
     for unit in ['', 'mil']:
@@ -32,3 +34,18 @@ def get_rec_categoria(df):
 def get_vendedores(df):
     df_vendedores = pd.DataFrame(df.groupby('Vendedor')['Preço'].agg(['sum', 'count']))
     return df_vendedores
+
+
+# Função para converter em csv
+@st.cache_data
+def convert_csv(df):
+    return df.to_csv(index=False).encode('utf-8')
+
+
+def mensagem_sucesso():
+    success = st.success(
+        'Dados exportados com sucesso!',
+        icon="✅"
+        )
+    time.sleep(2)
+    success.empty()
