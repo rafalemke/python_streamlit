@@ -1,14 +1,16 @@
 import json
 import pandas as pd
+import os
 
-file = open(r'C:\Users\Rafa_\Documents\python_streamlit\data\vendas.json', 'r')
+# Construir o caminho dinamicamente
+base_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(base_dir, 'data', 'vendas.json')
 
-data = json.load(file)
+# Abrir o arquivo usando o caminho dinâmico
+with open(file_path, 'r') as file:
+    data = json.load(file)
 
 df = pd.DataFrame.from_dict(data)
-
 df['Data da Compra'] = pd.to_datetime(df['Data da Compra'], format='%d/%m/%Y')
 
 # print(df.columns)
-
-file.close()
